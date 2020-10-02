@@ -3,7 +3,7 @@ package com.jiggag.rnkakaomaps;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import androidx.fragment.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,17 +11,15 @@ import android.view.ViewGroup;
 
 import net.daum.mf.map.api.MapLayout;
 import net.daum.mf.map.api.MapPoint;
+import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapView;
 
-public class MapViewActivity extends FragmentActivity
-        implements MapView.OpenAPIKeyAuthenticationResultListener, MapView.MapViewEventListener {
-
-  private static final int MENU_MAP_TYPE = Menu.FIRST + 1;
-  private static final int MENU_MAP_MOVE = Menu.FIRST + 2;
+public class MapViewActivity extends FragmentActivity implements MapView.OpenAPIKeyAuthenticationResultListener, MapView.MapViewEventListener {
 
   private static final String LOG_TAG = "MapViewDemoActivity";
 
   private MapView mMapView;
+  private MapPOIItem mDefaultMarker;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -37,9 +35,24 @@ public class MapViewActivity extends FragmentActivity
     mMapView.setOpenAPIKeyAuthenticationResultListener(this);
     mMapView.setMapViewEventListener(this);
     mMapView.setMapType(MapView.MapType.Standard);
+    createDefaultMarker(mMapView);
 
     ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
     mapViewContainer.addView(mapLayout);
+  }
+
+  private void createDefaultMarker(MapView mapView) {
+    mDefaultMarker = new MapPOIItem();
+    String name = "Default Marker";
+    mDefaultMarker.setItemName(name);
+    mDefaultMarker.setTag(0);
+    mDefaultMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(37.537229,127.005515));
+    mDefaultMarker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+    mDefaultMarker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+
+    mapView.addPOIItem(mDefaultMarker);
+    mapView.selectPOIItem(mDefaultMarker, true);
+    mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.537229,127.005515), true);
   }
 
   @Override
