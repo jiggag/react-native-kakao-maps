@@ -10,10 +10,9 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
 
 public class RnKakaoMaps extends ReactContextBaseJavaModule {
-
   private final ReactApplicationContext reactContext;
-  private Activity activity;
-  private static Class mapViewClass = MapViewActivity.class;
+  private static Activity activity;
+  private static Callback callback;
 
   public RnKakaoMaps(ReactApplicationContext reactContext) {
     super(reactContext);
@@ -26,12 +25,16 @@ public class RnKakaoMaps extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void showKakaoMap() {
-      activity = getCurrentActivity();
-      Intent i = new Intent();
-      i.setClass(activity, mapViewClass);
-      activity.startActivity(i);
-      activity.finish();
+  public void showKakaoMap(Callback customCallback) {
+    callback = customCallback;
+    activity = getCurrentActivity();
+    Intent i = new Intent();
+    i.setClass(activity, MapViewActivity.class);
+    activity.startActivity(i);
+    activity.finish();
+  }
 
+  public static void onBackPressed() {
+    callback.invoke();
   }
 }
