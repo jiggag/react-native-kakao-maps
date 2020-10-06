@@ -7,16 +7,19 @@ import android.content.Intent;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.Callback;
 
 public class RnKakaoMaps extends ReactContextBaseJavaModule {
-  private final ReactApplicationContext reactContext;
   private static Activity activity;
-  private static Callback callback;
+  private static Intent intent;
+  private static Intent originIntent;
+  private static ReactApplicationContext reactContext;
 
-  public RnKakaoMaps(ReactApplicationContext reactContext) {
-    super(reactContext);
-    this.reactContext = reactContext;
+  private static final String LOG_TAG = "RnKakaoMaps";
+
+
+  public RnKakaoMaps(ReactApplicationContext context) {
+    super(context);
+    reactContext = context;
   }
 
   @Override
@@ -25,16 +28,17 @@ public class RnKakaoMaps extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void showKakaoMap(Callback customCallback) {
-    callback = customCallback;
-    activity = getCurrentActivity();
-    Intent i = new Intent();
-    i.setClass(activity, MapViewActivity.class);
-    activity.startActivity(i);
-    activity.finish();
+  public void showKakaoMap() {
+    intent = new Intent();
+    originIntent = new Intent();
+    intent.setClass(reactContext, MapViewActivity.class);
+    if (intent.resolveActivity(reactContext.getPackageManager()) != null) {
+      intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      reactContext.startActivity(intent);
+    }
   }
 
   public static void onBackPressed() {
-    callback.invoke();
+    reactContext.startActivity(originIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
   }
 }
