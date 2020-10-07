@@ -55,6 +55,17 @@ public class MapViewActivity extends FragmentActivity implements MapView.OpenAPI
     mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.537229,127.005515), true);
   }
 
+  private void addMarker(MapView mapView, String markName, Double lat, Double lng, int tag) {
+    mDefaultMarker = new MapPOIItem();
+    mDefaultMarker.setItemName(markName);
+    mDefaultMarker.setTag(tag);
+    mDefaultMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(lat,lng));
+    mDefaultMarker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+    mDefaultMarker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+
+    mapView.addPOIItem(mDefaultMarker);
+  }
+
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     super.onCreateOptionsMenu(menu);
