@@ -14,6 +14,9 @@ import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class MapViewActivity extends FragmentActivity implements MapView.OpenAPIKeyAuthenticationResultListener, MapView.MapViewEventListener {
 
   private static final String LOG_TAG = "MapViewDemoActivity";
