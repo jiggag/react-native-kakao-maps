@@ -17,6 +17,15 @@
 ```javascript
 import KakakoMaps from '@jiggag/react-native-kakao-maps';
 
+const markerList = [
+  {
+    markerName: 'Default Marker',
+    lat: 37.537229,
+    lng: 127.005515,
+  }
+];
+
 ...
-KakakoMaps.showKakaoMap();
+
+KakakoMaps.showKakaoMap(markerList);
 ```
