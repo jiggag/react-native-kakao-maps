@@ -14,9 +14,18 @@ import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class MapViewActivity extends FragmentActivity implements MapView.OpenAPIKeyAuthenticationResultListener, MapView.MapViewEventListener {
 
   private static final String LOG_TAG = "MapViewDemoActivity";
+  private static final String MARKER_NAME = "Default Marker";
+  private static final Double INIT_LAT = 37.537229;
+  private static final Double INIT_LNG = 127.005515;
+  private static final String PARAM_MARKER_NAME = "markerName";
+  private static final String PARAM_LAT = "lat";
+  private static final String PARAM_LNG = "lng";
 
   private MapView mMapView;
   private MapPOIItem mDefaultMarker;
@@ -35,7 +44,11 @@ public class MapViewActivity extends FragmentActivity implements MapView.OpenAPI
     mMapView.setOpenAPIKeyAuthenticationResultListener(this);
     mMapView.setMapViewEventListener(this);
     mMapView.setMapType(MapView.MapType.Standard);
+
+    // TODO Delete default marker
     createDefaultMarker(mMapView);
+
+    createMarker((ArrayList<HashMap<String, Object>>) getIntent().getSerializableExtra("markerList"));
 
     ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
     mapViewContainer.addView(mapLayout);
@@ -43,16 +56,37 @@ public class MapViewActivity extends FragmentActivity implements MapView.OpenAPI
 
   private void createDefaultMarker(MapView mapView) {
     mDefaultMarker = new MapPOIItem();
-    String name = "Default Marker";
-    mDefaultMarker.setItemName(name);
+    mDefaultMarker.setItemName(MARKER_NAME);
     mDefaultMarker.setTag(0);
-    mDefaultMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(37.537229,127.005515));
+    mDefaultMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(INIT_LAT, INIT_LNG));
     mDefaultMarker.setMarkerType(MapPOIItem.MarkerType.BluePin);
     mDefaultMarker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
 
     mapView.addPOIItem(mDefaultMarker);
     mapView.selectPOIItem(mDefaultMarker, true);
-    mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.537229,127.005515), true);
+    mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(INIT_LAT, INIT_LNG), true);
+  }
+
+  private void createMarker(ArrayList<HashMap<String, Object>> markerList) {
+    if ((markerList != null ? markerList.size() : 0) > 0) {
+      for (int i = 0;i < markerList.size(); i++) {
+        String markerName = (String) markerList.get(i).get(PARAM_MARKER_NAME);
+        Double lat = (Double) markerList.get(i).get(PARAM_LAT);
+        Double lng = (Double) markerList.get(i).get(PARAM_LNG);
+        addMarker(mMapView, markerName, lat, lng, i);
+      }
+    }
+  }
+
+  private void addMarker(MapView mapView, String markName, Double lat, Double lng, int tag) {
+    mDefaultMarker = new MapPOIItem();
+    mDefaultMarker.setItemName(markName);
+    mDefaultMarker.setTag(tag);
+    mDefaultMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(lat,lng));
+    mDefaultMarker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+    mDefaultMarker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+
+    mapView.addPOIItem(mDefaultMarker);
   }
 
   @Override
