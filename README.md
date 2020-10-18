@@ -29,3 +29,6 @@ const markerList = [
 
 KakakoMaps.showKakaoMap(markerList);
 ```
+
+## Reference
+[React Native Exception Handler](https://github.com/master-atul/react-native-exception-handler)
