@@ -7,6 +7,8 @@ import android.content.Intent;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.ReadableArray;
 
 public class RnKakaoMaps extends ReactContextBaseJavaModule {
   private static Activity activity;
@@ -27,11 +29,13 @@ public class RnKakaoMaps extends ReactContextBaseJavaModule {
     return "RnKakaoMaps";
   }
 
+
   @ReactMethod
-  public void showKakaoMap() {
+  public void showKakaoMap(ReadableArray markerList) {
     intent = new Intent();
     originIntent = new Intent();
     intent.setClass(reactContext, MapViewActivity.class);
+    intent.putExtra("markerList", markerList.toArrayList());
     if (intent.resolveActivity(reactContext.getPackageManager()) != null) {
       intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       reactContext.startActivity(intent);
