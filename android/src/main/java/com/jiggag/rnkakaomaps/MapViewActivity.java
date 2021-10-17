@@ -138,4 +138,8 @@ public class MapViewActivity extends FragmentActivity implements MapView.OpenAPI
     Log.i(Constants.LOG_TAG, String.format("MapView onMapViewZoomLevelChanged (%d)", zoomLevel));
   }
 
+  @Override
+  public void onBackPressed() {
+    finish();
+  }
 }

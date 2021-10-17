@@ -60,6 +60,5 @@ public class RnKakaoMaps extends ReactContextBaseJavaModule {
         intent.putExtra("markerList", markerList);
         intent.putExtra("centerPoint", centerPoint);
         activity.startActivity(intent);
-        activity.finish();
     }
 }
