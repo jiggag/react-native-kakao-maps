@@ -27,6 +27,9 @@ public class MapViewActivity extends FragmentActivity implements MapView.OpenAPI
   private static final String PARAM_LAT = "lat";
   private static final String PARAM_LNG = "lng";
 
+  private static final int MENU_MAP_TYPE = Menu.FIRST + 1;
+  private static final int MENU_MAP_MOVE = Menu.FIRST + 2;
+
   private MapView mMapView;
   private MapPOIItem mDefaultMarker;
 

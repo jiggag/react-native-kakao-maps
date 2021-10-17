@@ -44,3 +44,5 @@ buck-out/
 \.buckd/
 *.keystore
       
+android/.settings/org.eclipse.buildship.core.prefs
+android/.project
