@@ -17,18 +17,41 @@
 ```javascript
 import KakakoMaps from '@jiggag/react-native-kakao-maps';
 
-const markerList = [
+// v0.0.4~
+KakakoMaps.show({
+  markerList: [
+    {
+      markerName: 'Default Marker',
+      lat: 37.537229,
+      lng: 127.005515,
+    },
+    ...
+  ],
+});
+
+KakakoMaps.show({
+  markerList: [
+    {
+      markerName: 'Default Marker',
+      lat: 37.537229,
+      lng: 127.005515,
+    },
+    ...
+  ],
+  centerPoint: {
+    lat: 37.5359,
+    lng: 127.005518,
+  },
+});
+
+
+// Deprecated (~v0.0.3)
+KakakoMaps.showKakaoMap([
   {
     markerName: 'Default Marker',
     lat: 37.537229,
     lng: 127.005515,
-  }
-];
-
-...
-
-KakakoMaps.showKakaoMap(markerList);
+  },
+  ...
+]);
 ```
-
-## Reference
-[React Native Exception Handler](https://github.com/master-atul/react-native-exception-handler)
