@@ -42,32 +42,16 @@ public class MapViewActivity extends FragmentActivity implements MapView.OpenAPI
     MapLayout mapLayout = new MapLayout(this);
     mMapView = mapLayout.getMapView();
 
-
     mMapView.setDaumMapApiKey(this.getString(R.string.kakao_app_key));
     mMapView.setOpenAPIKeyAuthenticationResultListener(this);
     mMapView.setMapViewEventListener(this);
     mMapView.setMapType(MapView.MapType.Standard);
 
-    // TODO Delete default marker
-    createDefaultMarker(mMapView);
 
     createMarker((ArrayList<HashMap<String, Object>>) getIntent().getSerializableExtra("markerList"));
 
     ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
     mapViewContainer.addView(mapLayout);
-  }
-
-  private void createDefaultMarker(MapView mapView) {
-    mDefaultMarker = new MapPOIItem();
-    mDefaultMarker.setItemName(MARKER_NAME);
-    mDefaultMarker.setTag(0);
-    mDefaultMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(INIT_LAT, INIT_LNG));
-    mDefaultMarker.setMarkerType(MapPOIItem.MarkerType.BluePin);
-    mDefaultMarker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-
-    mapView.addPOIItem(mDefaultMarker);
-    mapView.selectPOIItem(mDefaultMarker, true);
-    mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(INIT_LAT, INIT_LNG), true);
   }
 
   private void createMarker(ArrayList<HashMap<String, Object>> markerList) {
@@ -254,8 +238,6 @@ public class MapViewActivity extends FragmentActivity implements MapView.OpenAPI
 
   public void onMapViewInitialized(MapView mapView) {
     Log.i(LOG_TAG, "MapView had loaded. Now, MapView APIs could be called safely");
-    //mMapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
-    mapView.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(37.537229,127.005515), 2, true);
   }
 
   @Override
@@ -266,26 +248,14 @@ public class MapViewActivity extends FragmentActivity implements MapView.OpenAPI
 
   @Override
   public void onMapViewDoubleTapped(MapView mapView, MapPoint mapPoint) {
-
     MapPoint.GeoCoordinate mapPointGeo = mapPoint.getMapPointGeoCoord();
-
-    AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-    alertDialog.setTitle("DaumMapLibrarySample");
-    alertDialog.setMessage(String.format("Double-Tap on (%f,%f)", mapPointGeo.latitude, mapPointGeo.longitude));
-    alertDialog.setPositiveButton("OK", null);
-    alertDialog.show();
+    Log.i(LOG_TAG, String.format("MapView onMapViewDoubleTapped (%f,%f)", mapPointGeo.latitude, mapPointGeo.longitude));
   }
 
   @Override
   public void onMapViewLongPressed(MapView mapView, MapPoint mapPoint) {
-
     MapPoint.GeoCoordinate mapPointGeo = mapPoint.getMapPointGeoCoord();
-
-    AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-    alertDialog.setTitle("DaumMapLibrarySample");
-    alertDialog.setMessage(String.format("Long-Press on (%f,%f)", mapPointGeo.latitude, mapPointGeo.longitude));
-    alertDialog.setPositiveButton("OK", null);
-    alertDialog.show();
+    Log.i(LOG_TAG, String.format("MapView onMapViewLongPressed (%f,%f)", mapPointGeo.latitude, mapPointGeo.longitude));
   }
 
   @Override
