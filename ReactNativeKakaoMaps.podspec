@@ -23,6 +23,8 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/jiggag/react-native-kakao-maps.git", :tag => s.version.to_s }
   s.source_files  = "ios/*.{h,m}"
 
+  s.vendored_frameworks = 'ios/DaumMap.embeddedframework/DaumMap.framework'
+
   s.dependency "React"
 
 end

@@ -5,6 +5,13 @@
 `yarn add @jiggag/react-native-kakao-maps`
 
 ## Env
+### `iOS`
+`=> Info.plist`
+```xml
+<key>KAKAO_APP_KEY</key>
+<string>KAKAO_APP_KEY</string>
+```
+### `Android`
 `=> /android/app/src/main/res/values/strings.xml`
 ```sh
 <resources>
