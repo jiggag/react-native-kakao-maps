@@ -1,4 +1,3 @@
-
 package com.jiggag.rnkakaomaps;
 
 import android.app.Activity;
@@ -27,11 +26,12 @@ public class RnKakaoMaps extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void showKakaoMap(ReadableArray markerList) {
+  public void showKakaoMap(ReadableArray markerList, @Nullable ReadableMap centerPoint) {
       activity = getCurrentActivity();
       Intent intent = new Intent();
       intent.setClass(activity, mapViewClass);
       intent.putExtra("markerList", markerList.toArrayList());
+      intent.putExtra("centerPoint", centerPoint != null ? centerPoint.toHashMap() : new HashMap<String, Object>());
       activity.startActivity(intent);
       activity.finish();
   }

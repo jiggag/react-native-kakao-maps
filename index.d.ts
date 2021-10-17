@@ -1,11 +1,14 @@
-interface Maker {
-  markerName: string;
+interface Coordinate {
   lat: number;
   lng: number;
 }
 
+interface Maker extends Coordinate {
+  markerName: string;
+}
+
 export interface KakaoMapsPlugin {
-  showKakaoMap(markerList: Maker[]): void;
+  showKakaoMap(markerList: Maker[], initialCenterPoint?: Coordinate): void;
 }
 
 declare const RnKakaoMaps: KakaoMapsPlugin;
