@@ -34,6 +34,9 @@ RCT_EXPORT_METHOD(show:(NSDictionary *) params)
     MapViewController *viewController = [[MapViewController alloc] init];
     viewController.title = @"RNKakaoMaps";
     viewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    viewController.centerPoint = centerPoint;
+    viewController.markerList = markerList;
+    
     [[[[RCTSharedApplication() delegate] window] rootViewController] presentViewController:viewController
                                                                                   animated:YES
                                                                                 completion:nil];
