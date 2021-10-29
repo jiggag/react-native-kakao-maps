@@ -24,7 +24,7 @@ Pod::Spec.new do |s|
   s.source_files  = "ios/*.{h,m}"
 
   s.vendored_frameworks = 'ios/DaumMap.embeddedframework/DaumMap.framework'
-
+  s.resources = ['ios/DaumMap.embeddedframework/Resources/*.png']
   s.dependency "React"
 
 end

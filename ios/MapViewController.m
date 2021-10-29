@@ -1,8 +1,7 @@
 #import "MapViewController.h"
 
 @interface MapViewController () {
-    MTMapView *_mapView;
-    BOOL isMapRotationUsing;
+  MTMapView *_mapView;
 }
 
 @end
@@ -46,13 +45,6 @@ NSArray *createMarker(NSArray *markerList) {
     if (_mapView != nil) {
         _mapView = nil;
     }
-}
-
-#pragma mark -
-#pragma mark Event Handlers
-
-- (void)_onClickMenuButton:(id)sender {
-  return;
 }
 
 @end
