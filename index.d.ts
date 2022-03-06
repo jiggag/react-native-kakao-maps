@@ -8,8 +8,9 @@ interface Maker extends Coordinate {
 }
 
 interface Params {
-   markerList: Maker[];
-   centerPoint?: Coordinate;
+  markerImageUrl?: string;
+  markerList: Maker[];
+  centerPoint?: Coordinate;
 }
 
 export interface KakaoMapsPlugin {

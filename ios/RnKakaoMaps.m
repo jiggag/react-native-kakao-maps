@@ -20,8 +20,9 @@ RCT_EXPORT_METHOD(show:(NSDictionary *) params)
 
 
 - (void)startKakaoMap:(NSDictionary *)params {
+  NSString *markerImageUrl = [params objectForKey:@"markerImageUrl"];
   NSArray *markerList = [params objectForKey:@"markerList"];
-  NSMutableDictionary *centerPoint =  [[NSMutableDictionary alloc] init];
+  NSMutableDictionary *centerPoint = [[NSMutableDictionary alloc] init];
 
   if ([params objectForKey:@"centerPoint"] == nil) {
     centerPoint[@"lat"] = @"37.537229";
@@ -36,7 +37,8 @@ RCT_EXPORT_METHOD(show:(NSDictionary *) params)
     viewController.modalPresentationStyle = UIModalPresentationFullScreen;
     viewController.centerPoint = centerPoint;
     viewController.markerList = markerList;
-    
+    viewController.markerImageUrl = markerImageUrl;
+
     [[[[RCTSharedApplication() delegate] window] rootViewController] presentViewController:viewController
                                                                                   animated:YES
                                                                                 completion:nil];
