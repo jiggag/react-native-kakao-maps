@@ -21,6 +21,7 @@ RCT_EXPORT_METHOD(show:(NSDictionary *) params)
 
 - (void)startKakaoMap:(NSDictionary *)params {
   NSString *markerImageUrl = [params objectForKey:@"markerImageUrl"];
+  NSString *markerImageName = [params objectForKey:@"markerImageName"];
   NSArray *markerList = [params objectForKey:@"markerList"];
   NSMutableDictionary *centerPoint = [[NSMutableDictionary alloc] init];
 
@@ -38,6 +39,7 @@ RCT_EXPORT_METHOD(show:(NSDictionary *) params)
     viewController.centerPoint = centerPoint;
     viewController.markerList = markerList;
     viewController.markerImageUrl = markerImageUrl;
+    viewController.markerImageName = markerImageName;
 
     [[[[RCTSharedApplication() delegate] window] rootViewController] presentViewController:viewController
                                                                                   animated:YES

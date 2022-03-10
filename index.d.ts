@@ -8,6 +8,7 @@ interface Maker extends Coordinate {
 }
 
 interface Params {
+  markerImageName?: string;
   markerImageUrl?: string;
   markerList: Maker[];
   centerPoint?: Coordinate;

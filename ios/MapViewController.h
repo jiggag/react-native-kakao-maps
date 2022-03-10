@@ -7,5 +7,6 @@
 @property(assign, nonnull) NSArray *markerList;
 @property(assign, nonnull) NSDictionary *centerPoint;
 @property(assign, nonnull) NSString *markerImageUrl;
+@property(assign, nonnull) NSString *markerImageName;
 
 @end
