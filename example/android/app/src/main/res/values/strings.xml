@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">RNStarter</string>
+    <string name="kakao_app_key">KAKAO_APP_KEY</string>
+</resources>
