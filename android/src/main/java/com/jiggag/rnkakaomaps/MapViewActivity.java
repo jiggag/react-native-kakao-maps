@@ -1,7 +1,10 @@
 package com.jiggag.rnkakaomaps;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import androidx.fragment.app.FragmentActivity;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,12 +15,17 @@ import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapView;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MapViewActivity extends FragmentActivity implements MapView.OpenAPIKeyAuthenticationResultListener, MapView.MapViewEventListener {
   private MapView mMapView;
   private MapPOIItem mDefaultMarker;
+  private Bitmap markerImage = null;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -38,30 +46,67 @@ public class MapViewActivity extends FragmentActivity implements MapView.OpenAPI
     Double lng = (Double) centerPoint.get(Constants.PARAM_LNG);
     mMapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(lat, lng), true);
 
-    createMarker((ArrayList<HashMap<String, Object>>) getIntent().getSerializableExtra("markerList"));
+    ArrayList<HashMap<String, Object>> markerList = (ArrayList<HashMap<String, Object>>) getIntent().getSerializableExtra("markerList");
+    String markerImageUrl = (String) getIntent().getSerializableExtra("markerImageUrl");
 
-    ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
+    String markerImageName = (String) getIntent().getSerializableExtra("markerImageName");
+    int markerImageResourceId = markerImageName != null ? this.getResources().getIdentifier(markerImageName, "drawable", this.getPackageName()) : 0;
+
+    new Thread(() -> {
+      getBitmapFromUrl(markerImageUrl);
+      createMarker(markerList, markerImage, markerImageResourceId);
+    }).start();
+
+    ViewGroup mapViewContainer = findViewById(R.id.map_view);
     mapViewContainer.addView(mapLayout);
   }
 
-  private void createMarker(ArrayList<HashMap<String, Object>> markerList) {
+  private void getBitmapFromUrl(String imageUrl) {
+    if (imageUrl == null) {
+      return;
+    }
+
+    try {
+      URL url = new URL(imageUrl);
+      HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+      connection.setDoInput(true);
+      connection.connect();
+      InputStream input = connection.getInputStream();
+
+      markerImage = BitmapFactory.decodeStream(input);
+    } catch (IOException e) {
+      Log.e("getBitmapFromUrl", e.getMessage());
+    }
+  }
+
+  private void createMarker(ArrayList<HashMap<String, Object>> markerList, Bitmap markerImage, int markerResourceId) {
     if ((markerList != null ? markerList.size() : 0) > 0) {
       for (int i = 0;i < markerList.size(); i++) {
         String markerName = (String) markerList.get(i).get(Constants.PARAM_MARKER_NAME);
         Double lat = (Double) markerList.get(i).get(Constants.PARAM_LAT);
         Double lng = (Double) markerList.get(i).get(Constants.PARAM_LNG);
-        addMarker(mMapView, markerName, lat, lng, i);
+        addMarker(mMapView, markerName, lat, lng, i, markerImage, markerResourceId);
       }
     }
   }
 
-  private void addMarker(MapView mapView, String markName, Double lat, Double lng, int tag) {
+  private void addMarker(MapView mapView, String markName, Double lat, Double lng, int tag, Bitmap markerImage, int markerResourceId) {
     mDefaultMarker = new MapPOIItem();
     mDefaultMarker.setItemName(markName);
     mDefaultMarker.setTag(tag);
     mDefaultMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(lat,lng));
     mDefaultMarker.setMarkerType(MapPOIItem.MarkerType.BluePin);
     mDefaultMarker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+
+    if (markerImage != null) {
+      mDefaultMarker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+      mDefaultMarker.setCustomImageBitmap(markerImage);
+    }
+
+    if (markerResourceId > 0) {
+      mDefaultMarker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+      mDefaultMarker.setCustomImageResourceId(markerResourceId);
+    }
 
     mapView.addPOIItem(mDefaultMarker);
   }

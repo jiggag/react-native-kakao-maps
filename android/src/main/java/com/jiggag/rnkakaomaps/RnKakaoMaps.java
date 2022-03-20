@@ -45,6 +45,8 @@ public class RnKakaoMaps extends ReactContextBaseJavaModule {
     }
 
     private void startKakaoMap(HashMap<String, Object> params) {
+        String markerImageUrl = (String) params.get("markerImageUrl");
+        String markerImageName = (String) params.get("markerImageName");
         ArrayList markerList = (ArrayList) params.get("markerList");
         HashMap<String, Object> centerPoint = new HashMap<>();
         if (params.get("centerPoint") == null) {
@@ -59,6 +61,8 @@ public class RnKakaoMaps extends ReactContextBaseJavaModule {
         intent.setClass(activity, mapViewClass);
         intent.putExtra("markerList", markerList);
         intent.putExtra("centerPoint", centerPoint);
+        intent.putExtra("markerImageName", markerImageName);
+        intent.putExtra("markerImageUrl", markerImageUrl);
         activity.startActivity(intent);
     }
 }

@@ -9,16 +9,24 @@
 
 @implementation MapViewController
 
-NSArray *createMarker(NSArray *markerList) {
+NSArray *createMarker(NSArray *markerList, NSString *markerImageUrl, NSString *markerImageName) {
   NSMutableArray *pointList = [[NSMutableArray alloc] init];
 
   for (NSDictionary *point in markerList) {
     MTMapPOIItem* item = [MTMapPOIItem poiItem];
     item.itemName = point[@"markerName"];
     item.mapPoint = [MTMapPoint mapPointWithGeoCoord:MTMapPointGeoMake([point[@"lat"] doubleValue], [point[@"lng"] doubleValue])];
-    item.markerType = MTMapPOIItemMarkerTypeBluePin;
     item.showAnimationType = MTMapPOIItemShowAnimationTypeSpringFromGround;
 
+    item.markerType = markerImageUrl != nil || markerImageName != nil ? MTMapPOIItemMarkerTypeCustomImage : MTMapPOIItemMarkerTypeBluePin;
+
+    if (markerImageUrl != nil) {
+      item.customImage = [[[UIImage alloc] init] initWithData: [NSData dataWithContentsOfURL: [NSURL URLWithString: markerImageUrl]]];
+    }
+    if (markerImageName != nil) {
+      item.customImageName = markerImageName;
+    }
+    
     [pointList addObject:item];
   }
 
@@ -34,7 +42,7 @@ NSArray *createMarker(NSArray *markerList) {
   double lat = [self.centerPoint[@"lat"] doubleValue];
   double lng = [self.centerPoint[@"lng"] doubleValue];
 
-  [_mapView addPOIItems: createMarker(self.markerList)];
+  [_mapView addPOIItems: createMarker(self.markerList, self.markerImageUrl, self.markerImageName)];
   [_mapView fitMapViewAreaToShowAllPOIItems];
   [_mapView setMapCenterPoint:[MTMapPoint mapPointWithGeoCoord:MTMapPointGeoMake(lat, lng)] animated:YES];
 
