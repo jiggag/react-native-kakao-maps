@@ -12,6 +12,7 @@
 		1F40A57F26A2D29E00C17CE8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F40A57E26A2D29E00C17CE8 /* AppDelegate.swift */; };
 		1F712B2427A935F00034F542 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 1F712B2327A935F00034F542 /* FirebaseAnalytics */; };
 		1F712B2627A935F00034F542 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 1F712B2527A935F00034F542 /* FirebaseCrashlytics */; };
+		1FADA0BE27E746E20075E199 /* custom_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FADA0BD27E746E20075E199 /* custom_image.png */; };
 		2C174F4FA8C3A281BD96FBB9 /* libPods-RNStarter-RNStarterTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A2E05990E2FA5B8EB992D66D /* libPods-RNStarter-RNStarterTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		D5868907E1A09575385E11FE /* libPods-RNStarter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BF7C0323DDBDD5C7239B9FF /* libPods-RNStarter.a */; };
@@ -36,6 +37,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = RNStarter/Info.plist; sourceTree = "<group>"; };
 		1F40A57D26A2D29D00C17CE8 /* RNStarter-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNStarter-Bridging-Header.h"; sourceTree = "<group>"; };
 		1F40A57E26A2D29E00C17CE8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		1FADA0BD27E746E20075E199 /* custom_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = custom_image.png; sourceTree = "<group>"; };
 		63CD7A945C7F5C01F0877563 /* Pods-RNStarter.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNStarter.staging.xcconfig"; path = "Target Support Files/Pods-RNStarter/Pods-RNStarter.staging.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = RNStarter/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8BF7C0323DDBDD5C7239B9FF /* libPods-RNStarter.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RNStarter.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,6 +92,7 @@
 		13B07FAE1A68108700A75B9A /* RNStarter */ = {
 			isa = PBXGroup;
 			children = (
+				1FADA0BD27E746E20075E199 /* custom_image.png */,
 				1F40A57E26A2D29E00C17CE8 /* AppDelegate.swift */,
 				1F40A57D26A2D29D00C17CE8 /* RNStarter-Bridging-Header.h */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -256,6 +259,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				1FADA0BE27E746E20075E199 /* custom_image.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
