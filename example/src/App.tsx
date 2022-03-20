@@ -33,7 +33,7 @@ export function App() {
 
   const onPressImageUrl = useCallback(() => {
     RnKakaoMaps.show({
-      markerImageUrl: 'https://github.com/jiggag/react-native-kakao-maps/tree/develop/example/custom_image.png',
+      markerImageUrl: 'https://github.com/jiggag/react-native-kakao-maps/blob/develop/example/custom_image.png?raw=true',
       markerList: [
         {
           markerName: 'Marker1',
