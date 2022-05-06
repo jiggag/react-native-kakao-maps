@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 interface Coordinate {
   lat: number;
   lng: number;
@@ -24,3 +26,9 @@ export interface KakaoMapsPlugin {
 declare const RnKakaoMaps: KakaoMapsPlugin;
 
 export default RnKakaoMaps;
+
+declare const KakaoMapView: React.ComponentType<Params>;
+
+export {
+  KakaoMapView
+};

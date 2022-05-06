@@ -31,7 +31,7 @@ public class MapViewActivity extends FragmentActivity implements MapView.OpenAPI
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    setContentView(R.layout.map_view);
+    setContentView(R.layout.kakao_map_view);
 
     MapLayout mapLayout = new MapLayout(this);
     mMapView = mapLayout.getMapView();
@@ -57,7 +57,7 @@ public class MapViewActivity extends FragmentActivity implements MapView.OpenAPI
       createMarker(markerList, markerImage, markerImageResourceId);
     }).start();
 
-    ViewGroup mapViewContainer = findViewById(R.id.map_view);
+    ViewGroup mapViewContainer = findViewById(R.id.kakao_map_view);
     mapViewContainer.addView(mapLayout);
   }
 
