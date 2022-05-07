@@ -1,5 +1,6 @@
 package com.jiggag.rnkakaomaps;
 
+import android.os.Bundle;
 import android.view.Choreographer;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -14,18 +15,16 @@ import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.annotations.ReactProp;
-import com.facebook.react.uimanager.annotations.ReactPropGroup;
 import com.facebook.react.uimanager.ViewGroupManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class KakaoMapManager extends ViewGroupManager<FrameLayout> {
 
     public static final String REACT_CLASS = "KakaoMapView";
     public final int COMMAND_CREATE = 1;
-    private int propWidth;
-    private int propHeight;
 
     ReactApplicationContext reactContext;
 
@@ -67,31 +66,35 @@ public class KakaoMapManager extends ViewGroupManager<FrameLayout> {
         }
     }
 
-    @ReactPropGroup(names = {"width", "height"}, customType = "Style")
-    public void setStyle(FrameLayout view, int index, Integer value) {
-        if (index == 0) {
-            propWidth = value;
-        }
-
-        if (index == 1) {
-            propHeight = value;
-        }
-    }
+    private ArrayList markerList;
+    private double paramLat = Constants.INIT_LAT;
+    private double paramLng = Constants.INIT_LNG;
+    private String markerImageName;
+    private String markerImageUrl;
 
     @ReactProp(name = "markerList")
-    public void setMarkerList(FrameLayout view, @Nullable ReadableArray markerList) {
+    public void setMarkerList(FrameLayout view, @Nullable ReadableArray _markerList) {
+        if (_markerList != null) {
+            markerList = _markerList.toArrayList();
+        }
     }
 
     @ReactProp(name = "centerPoint")
     public void setCenterPoint(FrameLayout view, @Nullable ReadableMap centerPoint) {
+        if (centerPoint != null) {
+            paramLat = centerPoint.getDouble(Constants.PARAM_LAT);
+            paramLng = centerPoint.getDouble(Constants.PARAM_LNG);
+        }
     }
 
     @ReactProp(name = "markerImageName")
-    public void setMarkerImageName(FrameLayout view, @Nullable String markerImageName) {
+    public void setMarkerImageName(FrameLayout view, @Nullable String _markerImageName) {
+        markerImageName = _markerImageName;
     }
 
     @ReactProp(name = "markerImageUrl")
-    public void setMarkerImageUrl(FrameLayout view, @Nullable String markerImageUrl) {
+    public void setMarkerImageUrl(FrameLayout view, @Nullable String _markerImageUrl) {
+        markerImageUrl = _markerImageUrl;
     }
 
     public void createFragment(FrameLayout root, int reactNativeViewId) {
@@ -101,6 +104,14 @@ public class KakaoMapManager extends ViewGroupManager<FrameLayout> {
         final KakaoMapFragment fragment = new KakaoMapFragment();
         FragmentActivity activity = (FragmentActivity) reactContext.getCurrentActivity();
 
+        Bundle bundle = new Bundle();
+        bundle.putDouble(Constants.PARAM_LAT, paramLat);
+        bundle.putDouble(Constants.PARAM_LNG, paramLng);
+        bundle.putString(Constants.PARAM_MARKER_NAME, markerImageName);
+        bundle.putString(Constants.PARAM_MARKER_IMAGE_URL, markerImageUrl);
+        bundle.putParcelableArrayList(Constants.PARAM_MARKER_LIST, markerList);
+
+        fragment.setArguments(bundle);
         activity.getSupportFragmentManager()
                 .beginTransaction()
                 .replace(reactNativeViewId, fragment, String.valueOf(reactNativeViewId))
@@ -119,14 +130,10 @@ public class KakaoMapManager extends ViewGroupManager<FrameLayout> {
     }
 
     public void manuallyLayoutChildren(View view) {
-        // propWidth and propHeight coming from react-native props
-        int width = propWidth;
-        int height = propHeight;
-
         view.measure(
-                View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
-                View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY));
+                View.MeasureSpec.makeMeasureSpec(view.getMeasuredWidth(), View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(view.getMeasuredHeight(), View.MeasureSpec.EXACTLY));
 
-        view.layout(0, 0, width, height);
+        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
     }
 }
