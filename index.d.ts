@@ -16,6 +16,11 @@ interface Params {
   centerPoint?: Coordinate;
 }
 
+interface ComponentProps extends Params {
+  width: number;
+  height: number;
+}
+
 export interface KakaoMapsPlugin {
   // Deprecated
   showKakaoMap(markerList: Maker[]): void;
@@ -27,7 +32,7 @@ declare const RnKakaoMaps: KakaoMapsPlugin;
 
 export default RnKakaoMaps;
 
-declare const KakaoMapView: React.ComponentType<Params>;
+declare const KakaoMapView: React.ComponentType<ComponentProps>;
 
 export {
   KakaoMapView

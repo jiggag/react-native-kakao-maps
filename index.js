@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { UIManager, findNodeHandle, requireNativeComponent, NativeModules } from 'react-native';
+import { UIManager, findNodeHandle, requireNativeComponent, NativeModules, View } from 'react-native';
 
 const { RnKakaoMaps } = NativeModules;
 
@@ -23,9 +23,13 @@ export const KakaoMapView = (props) => {
   }, []);
 
   return (
-    <NativeComponent
-      {...props}
-      ref={ref}
-    />
+    <View style={{
+      borderColor: 'transparent'
+    }}>
+      <NativeComponent
+        {...props}
+        ref={ref}
+      />
+    </View>
   );
 };
