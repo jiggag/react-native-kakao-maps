@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { UIManager, findNodeHandle, requireNativeComponent, NativeModules, View } from 'react-native';
+import { Platform, UIManager, findNodeHandle, requireNativeComponent, NativeModules, View } from 'react-native';
 
 const { RnKakaoMaps } = NativeModules;
 
@@ -7,12 +7,16 @@ export default RnKakaoMaps;
 
 const NativeComponent = requireNativeComponent('KakaoMapView');
 
-const createFragment = (viewId) =>
-  UIManager.dispatchViewManagerCommand(
+const createFragment = (viewId) => {
+  if (Platform.OS === 'ios') {
+    return;
+  }
+  return UIManager.dispatchViewManagerCommand(
     viewId,
     UIManager.KakaoMapView.Commands.create.toString(),
     [viewId]
   );
+};
 
 export const KakaoMapView = (props) => {
   const ref = useRef(null);
