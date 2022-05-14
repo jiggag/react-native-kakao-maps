@@ -46,3 +46,4 @@ buck-out/
       
 android/.settings/org.eclipse.buildship.core.prefs
 android/.project
+.env

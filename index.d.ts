@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 interface Coordinate {
   lat: number;
   lng: number;
@@ -14,13 +16,13 @@ interface Params {
   centerPoint?: Coordinate;
 }
 
-export interface KakaoMapsPlugin {
-  // Deprecated
-  showKakaoMap(markerList: Maker[]): void;
-
-  show(params: Params): void;
+interface ComponentProps extends Params {
+  width: number;
+  height: number;
 }
 
-declare const RnKakaoMaps: KakaoMapsPlugin;
+declare const KakaoMapView: React.ComponentType<ComponentProps>;
 
-export default RnKakaoMaps;
+export {
+  KakaoMapView
+};

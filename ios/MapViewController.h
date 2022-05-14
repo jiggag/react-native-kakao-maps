@@ -1,12 +1,11 @@
 #import <UIKit/UIKit.h>
 #import <DaumMap/MTMapView.h>
 
+@interface MapViewController : UIView
 
-@interface MapViewController : UIViewController
-
-@property(assign, nonnull) NSArray *markerList;
-@property(assign, nonnull) NSDictionary *centerPoint;
-@property(assign, nonnull) NSString *markerImageUrl;
-@property(assign, nonnull) NSString *markerImageName;
+@property(nonatomic, assign, nonnull) NSArray *markerList;
+@property(nonatomic, assign, nonnull) NSDictionary *centerPoint;
+@property(nonatomic, assign, nonnull) NSString *markerImageUrl;
+@property(nonatomic, assign, nonnull) NSString *markerImageName;
 
 @end
