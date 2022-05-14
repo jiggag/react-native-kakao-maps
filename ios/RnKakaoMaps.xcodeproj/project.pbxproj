@@ -15,7 +15,7 @@
 		1F19B7AB271C28300001892A /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F19B7AA271C28300001892A /* libc++.tbd */; };
 		1F19B7AE271C28370001892A /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F19B7AD271C28370001892A /* libxml2.tbd */; };
 		1F19B7B1271C283D0001892A /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F19B7B0271C283D0001892A /* libsqlite3.tbd */; };
-		1F9F109A2530C25E00DB7C40 /* RnKakaoMaps.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F9F10992530C25E00DB7C40 /* RnKakaoMaps.m */; };
+		1FA16530282F740A0018990A /* KakaoMapManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA1652F282F740A0018990A /* KakaoMapManager.m */; };
 		1FF0977E2732E8F200FFA400 /* DaumMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FF0977D2732E8DF00FFA400 /* DaumMap.framework */; };
 /* End PBXBuildFile section */
 
@@ -42,8 +42,7 @@
 		1F19B7AA271C28300001892A /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/lib/libc++.tbd"; sourceTree = DEVELOPER_DIR; };
 		1F19B7AD271C28370001892A /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/lib/libxml2.tbd; sourceTree = DEVELOPER_DIR; };
 		1F19B7B0271C283D0001892A /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; };
-		1F9F10992530C25E00DB7C40 /* RnKakaoMaps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RnKakaoMaps.m; sourceTree = "<group>"; };
-		1F9F109B2530C26700DB7C40 /* RnKakaoMaps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RnKakaoMaps.h; sourceTree = "<group>"; };
+		1FA1652F282F740A0018990A /* KakaoMapManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KakaoMapManager.m; sourceTree = "<group>"; };
 		1FF097592732E8DF00FFA400 /* map_pinup_custom@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_pinup_custom@3x.png"; sourceTree = "<group>"; };
 		1FF0975A2732E8DF00FFA400 /* map_pin_custom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_pin_custom.png; sourceTree = "<group>"; };
 		1FF0975B2732E8DF00FFA400 /* shadow_balloon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shadow_balloon.png; sourceTree = "<group>"; };
@@ -186,10 +185,9 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				1FA1652F282F740A0018990A /* KakaoMapManager.m */,
 				1F19B775271C279A0001892A /* MapViewController.h */,
 				1F19B774271C279A0001892A /* MapViewController.m */,
-				1F9F109B2530C26700DB7C40 /* RnKakaoMaps.h */,
-				1F9F10992530C25E00DB7C40 /* RnKakaoMaps.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
 				1F19B7A1271C28040001892A /* Frameworks */,
 			);
@@ -252,8 +250,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F9F109A2530C25E00DB7C40 /* RnKakaoMaps.m in Sources */,
 				1F19B776271C279A0001892A /* MapViewController.m in Sources */,
+				1FA16530282F740A0018990A /* KakaoMapManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

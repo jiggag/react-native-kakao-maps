@@ -9,8 +9,7 @@ import com.facebook.react.ReactInstanceManager
 import com.facebook.react.ReactNativeHost
 import com.facebook.react.ReactPackage
 import com.facebook.soloader.SoLoader
-
-import java.lang.reflect.InvocationTargetException
+import com.jiggag.rnkakaomaps.KakaoMapPackage
 
 class MainApplication : Application(), ReactApplication {
     private val reactNativeHost: ReactNativeHost = object : ReactNativeHost(this) {
@@ -19,7 +18,10 @@ class MainApplication : Application(), ReactApplication {
         }
 
         override fun getPackages(): List<ReactPackage> {
-            return PackageList(this).packages
+            val packageList = PackageList(this).packages
+            packageList.add(KakaoMapPackage())
+
+            return packageList
         }
 
         override fun getJSMainModuleName(): String {
@@ -45,18 +47,6 @@ class MainApplication : Application(), ReactApplication {
      * @param reactInstanceManager
      */
     private fun initializeFlipper(context: Context, reactInstanceManager: ReactInstanceManager) {
-        if (BuildConfig.DEBUG) {
-            try {
-                ReactNativeFlipper.initializeFlipper(context, reactInstanceManager)
-            } catch (e: ClassNotFoundException) {
-                e.printStackTrace()
-            } catch (e: NoSuchMethodException) {
-                e.printStackTrace()
-            } catch (e: IllegalAccessException) {
-                e.printStackTrace()
-            } catch (e: InvocationTargetException) {
-                e.printStackTrace()
-            }
-        }
+
     }
 }
