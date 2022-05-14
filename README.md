@@ -29,58 +29,37 @@
     ```
    
 ## Usage
-```javascript
-import KakakoMaps from '@jiggag/react-native-kakao-maps';
+```tsx
+import { KakakoMapView } from '@jiggag/react-native-kakao-maps';
 
-// v0.0.6~
-KakakoMaps.show({
-  markerImageName: 'customImageName', // 옵션1
-  markerImageUrl: 'https://..../customImageUrl.png', // 옵션2
-  markerList: [
-    {
-      markerName: 'Default Marker',
-      lat: 37.537229,
-      lng: 127.005515,
-    },
-    ...
-  ],
-});
+return (
+  <KakaoMapView
+    markerImageName="customImageName" // 옵션1
+    markerImageUrl="https://github.com/jiggag/react-native-kakao-maps/blob/develop/example/custom_image.png?raw=true" // 옵션2
+    markerList={[
+        {
+          lat: 37.59523,
+          lng: 127.08600,
+          markerName: 'marker'
+        },
+        {
+          lat: 37.59523,
+          lng: 127.08705,
+          markerName: 'marker2'
+        },
+    ]}
+    width={300}
+    height={500}
+    centerPoint={{
+        lat: 37.59523,
+        lng: 127.08600,
+    }}
+  />
+);
+```
 
-// v0.0.4~
-KakakoMaps.show({
-  markerList: [
-    {
-      markerName: 'Default Marker',
-      lat: 37.537229,
-      lng: 127.005515,
-    },
-    ...
-  ],
-});
-
-KakakoMaps.show({
-  markerList: [
-    {
-      markerName: 'Default Marker',
-      lat: 37.537229,
-      lng: 127.005515,
-    },
-    ...
-  ],
-  centerPoint: {
-    lat: 37.5359,
-    lng: 127.005518,
-  },
-});
-
-
-// Deprecated (~v0.0.3)
-KakakoMaps.showKakaoMap([
-  {
-    markerName: 'Default Marker',
-    lat: 37.537229,
-    lng: 127.005515,
-  },
-  ...
-]);
+## Deprecated
+```
+KakakoMaps.show({...})
+KakakoMaps.showKakaoMap({...})
 ```

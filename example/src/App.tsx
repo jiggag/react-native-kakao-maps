@@ -6,7 +6,7 @@ export function App() {
   return (
     <SafeAreaView>
       <KakaoMapView
-        markerImageUrl={"https://github.com/jiggag/react-native-kakao-maps/blob/develop/example/custom_image.png?raw=true"}
+        markerImageUrl="https://github.com/jiggag/react-native-kakao-maps/blob/develop/example/custom_image.png?raw=true"
         markerList={[
           {
             lat: 37.59523,

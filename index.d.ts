@@ -21,17 +21,6 @@ interface ComponentProps extends Params {
   height: number;
 }
 
-export interface KakaoMapsPlugin {
-  // Deprecated
-  showKakaoMap(markerList: Maker[]): void;
-
-  show(params: Params): void;
-}
-
-declare const RnKakaoMaps: KakaoMapsPlugin;
-
-export default RnKakaoMaps;
-
 declare const KakaoMapView: React.ComponentType<ComponentProps>;
 
 export {

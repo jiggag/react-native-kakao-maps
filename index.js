@@ -1,9 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Platform, UIManager, findNodeHandle, requireNativeComponent, NativeModules, View } from 'react-native';
-
-const { RnKakaoMaps } = NativeModules;
-
-export default RnKakaoMaps;
+import { Platform, UIManager, findNodeHandle, requireNativeComponent, View } from 'react-native';
 
 const NativeComponent = requireNativeComponent('KakaoMapView');
 
