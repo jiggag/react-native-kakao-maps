@@ -22,28 +22,23 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class KakaoMapFragment extends Fragment implements MapView.OpenAPIKeyAuthenticationResultListener, MapView.MapViewEventListener  {
+public class KakaoMapFragment extends Fragment implements MapView.OpenAPIKeyAuthenticationResultListener, MapView.MapViewEventListener {
     private MapView mMapView;
     private MapPOIItem mDefaultMarker;
     private Bitmap markerImage = null;
+    MapLayout mapLayout;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        super.onCreateView(inflater, parent, savedInstanceState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mapLayout = new MapLayout(getActivity());
+    }
 
-
-        View rootView = inflater.inflate(R.layout.kakao_map_view, parent, false);
-
-        MapLayout mapLayout = new MapLayout(getActivity());
-        mMapView = mapLayout.getMapView();
-
-        mMapView.setDaumMapApiKey(this.getString(R.string.kakao_app_key));
-        mMapView.setOpenAPIKeyAuthenticationResultListener(this);
-        mMapView.setMapViewEventListener(this);
-        mMapView.setMapType(MapView.MapType.Standard);
-
+    private void createMapView() {
+        mMapView.removeAllPOIItems();
 
         Double lat = getArguments().getDouble(Constants.PARAM_LAT);
         Double lng = getArguments().getDouble(Constants.PARAM_LNG);
@@ -51,7 +46,6 @@ public class KakaoMapFragment extends Fragment implements MapView.OpenAPIKeyAuth
 
         ArrayList<HashMap<String, Object>> markerList = (ArrayList<HashMap<String, Object>>) getArguments().get(Constants.PARAM_MARKER_LIST);
         String markerImageUrl = getArguments().getString(Constants.PARAM_MARKER_IMAGE_URL);
-
         String markerImageName = getArguments().getString(Constants.PARAM_MARKER_NAME);
         int markerImageResourceId = markerImageName != null ? this.getResources().getIdentifier(markerImageName, "drawable", getActivity().getPackageName()) : 0;
 
@@ -59,6 +53,21 @@ public class KakaoMapFragment extends Fragment implements MapView.OpenAPIKeyAuth
             getBitmapFromUrl(markerImageUrl);
             createMarker(markerList, markerImage, markerImageResourceId);
         }).start();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        super.onCreateView(inflater, parent, savedInstanceState);
+
+        View rootView = inflater.inflate(R.layout.kakao_map_view, parent, false);
+
+        mMapView = mapLayout.getMapView();
+        mMapView.setDaumMapApiKey(this.getString(R.string.kakao_app_key));
+        mMapView.setOpenAPIKeyAuthenticationResultListener(this);
+        mMapView.setMapViewEventListener(this);
+        mMapView.setMapType(MapView.MapType.Standard);
+
+        createMapView();
 
         ViewGroup mapViewContainer = rootView.findViewById(R.id.kakao_map_view);
         mapViewContainer.addView(mapLayout);
@@ -79,6 +88,7 @@ public class KakaoMapFragment extends Fragment implements MapView.OpenAPIKeyAuth
     @Override
     public void onResume() {
         super.onResume();
+        createMapView();
     }
 
     @Override
@@ -96,7 +106,7 @@ public class KakaoMapFragment extends Fragment implements MapView.OpenAPIKeyAuth
 
     @Override
     public void onDaumMapOpenAPIKeyAuthenticationResult(MapView mapView, int resultCode, String resultMessage) {
-        Log.i(Constants.LOG_TAG,	String.format("Open API Key Authentication Result : code=%d, message=%s", resultCode, resultMessage));
+        Log.i(Constants.LOG_TAG, String.format("Open API Key Authentication Result : code=%d, message=%s", resultCode, resultMessage));
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -173,7 +183,7 @@ public class KakaoMapFragment extends Fragment implements MapView.OpenAPIKeyAuth
 
     private void createMarker(ArrayList<HashMap<String, Object>> markerList, Bitmap markerImage, int markerResourceId) {
         if ((markerList != null ? markerList.size() : 0) > 0) {
-            for (int i = 0;i < markerList.size(); i++) {
+            for (int i = 0; i < markerList.size(); i++) {
                 String markerName = (String) markerList.get(i).get(Constants.PARAM_MARKER_NAME);
                 Double lat = (Double) markerList.get(i).get(Constants.PARAM_LAT);
                 Double lng = (Double) markerList.get(i).get(Constants.PARAM_LNG);
@@ -186,7 +196,7 @@ public class KakaoMapFragment extends Fragment implements MapView.OpenAPIKeyAuth
         mDefaultMarker = new MapPOIItem();
         mDefaultMarker.setItemName(markName);
         mDefaultMarker.setTag(tag);
-        mDefaultMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(lat,lng));
+        mDefaultMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(lat, lng));
         mDefaultMarker.setMarkerType(MapPOIItem.MarkerType.BluePin);
         mDefaultMarker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
 
@@ -199,7 +209,6 @@ public class KakaoMapFragment extends Fragment implements MapView.OpenAPIKeyAuth
             mDefaultMarker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
             mDefaultMarker.setCustomImageResourceId(markerResourceId);
         }
-
         mapView.addPOIItem(mDefaultMarker);
     }
 
