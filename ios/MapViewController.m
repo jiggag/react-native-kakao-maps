@@ -6,7 +6,6 @@
 
 @end
 
-
 @implementation MapViewController
 
 NSArray *createMarker(NSArray *markerList, NSString *markerImageUrl, NSString *markerImageName) {
@@ -49,20 +48,24 @@ NSArray *createMarker(NSArray *markerList, NSString *markerImageUrl, NSString *m
 }
 
 - (void)setCenterPoint:(NSDictionary *)centerPoint {
-  _centerPoint = centerPoint;
+  if (centerPoint == nil) {
+    _lat = 37.59523;
+    _lng = 127.08600;
+  } else {
+    _lat = [centerPoint[@"lat"] doubleValue];
+    _lng = [centerPoint[@"lng"] doubleValue];
+  }
   [self load];
 }
 
 - (void)load {
-  double lat = 37.59523;
-  double lng = 127.08600;
-  if (_centerPoint != nil) {
-    lat = [_centerPoint[@"lat"] doubleValue];
-    lng = [_centerPoint[@"lng"] doubleValue];
+  if (_mapView == nil) {
+    return;
   }
 
+  [_mapView removeAllPOIItems];
   [_mapView addPOIItems: createMarker(_markerList, _markerImageUrl, _markerImageName)];
-  [_mapView setMapCenterPoint:[MTMapPoint mapPointWithGeoCoord:MTMapPointGeoMake(lat, lng)] animated:YES];
+  [_mapView setMapCenterPoint:[MTMapPoint mapPointWithGeoCoord:MTMapPointGeoMake(_lat, _lng)] animated:YES];
 
   [self addSubview: _mapView];
 }
@@ -70,7 +73,7 @@ NSArray *createMarker(NSArray *markerList, NSString *markerImageUrl, NSString *m
 - (instancetype)init
 {
   self = [super init];
-  if (self) {
+  if (self && _mapView == nil) {
     _mapView = [[MTMapView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
     _mapView.delegate = self;
     _mapView.baseMapType = MTMapTypeStandard;
