@@ -3,10 +3,12 @@ import { Platform, UIManager, findNodeHandle, requireNativeComponent, View } fro
 
 const NativeComponent = requireNativeComponent('KakaoMapView');
 
-const createFragment = (viewId) => {
+const register = (ref) => {
   if (Platform.OS === 'ios') {
     return;
   }
+
+  const viewId = findNodeHandle(ref.current);
   return UIManager.dispatchViewManagerCommand(
     viewId,
     UIManager.KakaoMapView.Commands.create.toString(),
@@ -18,8 +20,7 @@ export const KakaoMapView = (props) => {
   const ref = useRef(null);
 
   useEffect(() => {
-    const viewId = findNodeHandle(ref.current);
-    createFragment(viewId);
+    register(ref);
   }, []);
 
   return (
