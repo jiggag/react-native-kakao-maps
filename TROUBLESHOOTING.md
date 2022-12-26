@@ -160,3 +160,18 @@ Undefined symbol: _sqlite3_step
 
 #### 해결방법
 `Build Phases > Link Binary With Libraries > libsqlite3.tbd 추가`
+
+### 지도가 보이지 않아요
+[카카오 지도 개발자 문서](https://apis.map.kakao.com/android/guide/#step2)를 참고하여 앱 키 발급 및 키 해시를 등록해주세요
+
+<details>
+<summary>안드로이드 키 해시 추출하기</summary>
+
+```shell
+keytool -exportcert -alias {key_alias} -keystore {keystore_path} -storepass {store_password} -keypass {key_password} | openssl sha1 -binary | openssl base64
+keytool -exportcert -alias androiddebugkey -keystore ./android/app/debug.keystore -storepass android -keypass android | openssl sha1 -binary | openssl base64
+```
+</details>
+
+#### 해결방법
+발급 받은 앱 키 `strings.xml > kakao_app_key` 교체 및 `앱 설정 > 플랫폼` 키 해시 등록
