@@ -4,7 +4,8 @@
 @interface MapViewController : UIView
 
 @property(nonatomic, assign, nonnull) NSArray *markerList;
-@property(nonatomic, assign, nonnull) NSDictionary *centerPoint;
+@property(nonatomic, assign) double lat;
+@property(nonatomic, assign) double lng;
 @property(nonatomic, assign, nonnull) NSString *markerImageUrl;
 @property(nonatomic, assign, nonnull) NSString *markerImageName;
 
