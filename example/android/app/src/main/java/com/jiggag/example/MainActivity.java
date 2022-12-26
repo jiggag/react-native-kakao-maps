@@ -1,5 +1,6 @@
-package com.example;
+package com.jiggag.example;
 
+import com.jiggag.example.BuildConfig;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
