@@ -120,6 +120,7 @@ public class KakaoMapManager extends ViewGroupManager<FrameLayout> {
         bundle.putString(Constants.PARAM_MARKER_IMAGE_URL, markerImageUrl);
         bundle.putParcelableArrayList(Constants.PARAM_MARKER_LIST, markerList);
 
+        fragment.reactContext = reactContext;
         fragment.setArguments(bundle);
         activity.getSupportFragmentManager()
                 .beginTransaction()
