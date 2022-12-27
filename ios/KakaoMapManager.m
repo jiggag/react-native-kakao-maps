@@ -12,6 +12,7 @@ RCT_EXPORT_VIEW_PROPERTY(markerList, NSArray)
 RCT_EXPORT_VIEW_PROPERTY(centerPoint, NSDictionary)
 RCT_EXPORT_VIEW_PROPERTY(markerImageUrl, NSString)
 RCT_EXPORT_VIEW_PROPERTY(markerImageName, NSString)
+RCT_EXPORT_VIEW_PROPERTY(onChange, RCTBubblingEventBlock)
 
 - (UIView *)view
 {

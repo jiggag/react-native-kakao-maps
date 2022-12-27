@@ -1,6 +1,6 @@
 {
   "name": "@jiggag/react-native-kakao-maps",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "react native kakao map",
   "main": "index.js",
   "scripts": {

@@ -26,7 +26,14 @@ public class KakaoMapManager extends ViewGroupManager<FrameLayout> {
     public static final String REACT_CLASS = "KakaoMapView";
     public final int COMMAND_CREATE = 1;
 
-    ReactApplicationContext reactContext;
+    private ReactApplicationContext reactContext;
+    private KakaoMapFragment fragment;
+    private int containerViewId;
+    private ArrayList markerList;
+    private double paramLat = Constants.INIT_LAT;
+    private double paramLng = Constants.INIT_LNG;
+    private String markerImageName;
+    private String markerImageUrl;
 
     public KakaoMapManager(ReactApplicationContext reactContext) {
         this.reactContext = reactContext;
@@ -55,28 +62,22 @@ public class KakaoMapManager extends ViewGroupManager<FrameLayout> {
             @Nullable ReadableArray args
     ) {
         super.receiveCommand(root, commandId, args);
-        int reactNativeViewId = args.getInt(0);
+        containerViewId = args.getInt(0);
         int commandIdInt = Integer.parseInt(commandId);
 
-        switch (commandIdInt) {
-            case COMMAND_CREATE:
-                createFragment(root, reactNativeViewId);
-                break;
-            default: {}
+        if (commandIdInt == COMMAND_CREATE) {
+            if (fragment == null) {
+                createFragment(root);
+            }
         }
     }
-
-    private ArrayList markerList;
-    private double paramLat = Constants.INIT_LAT;
-    private double paramLng = Constants.INIT_LNG;
-    private String markerImageName;
-    private String markerImageUrl;
 
     @ReactProp(name = "markerList")
     public void setMarkerList(FrameLayout view, @Nullable ReadableArray _markerList) {
         if (_markerList != null) {
             markerList = _markerList.toArrayList();
         }
+        bundleFragment();
     }
 
     @ReactProp(name = "centerPoint")
@@ -85,25 +86,33 @@ public class KakaoMapManager extends ViewGroupManager<FrameLayout> {
             paramLat = centerPoint.getDouble(Constants.PARAM_LAT);
             paramLng = centerPoint.getDouble(Constants.PARAM_LNG);
         }
+        bundleFragment();
     }
 
     @ReactProp(name = "markerImageName")
     public void setMarkerImageName(FrameLayout view, @Nullable String _markerImageName) {
         markerImageName = _markerImageName;
+        bundleFragment();
     }
 
     @ReactProp(name = "markerImageUrl")
     public void setMarkerImageUrl(FrameLayout view, @Nullable String _markerImageUrl) {
         markerImageUrl = _markerImageUrl;
+        bundleFragment();
     }
 
-    public void createFragment(FrameLayout root, int reactNativeViewId) {
-        ViewGroup parentView = (ViewGroup) root.findViewById(reactNativeViewId);
+    private void createFragment(FrameLayout root) {
+        ViewGroup parentView = (ViewGroup) root.findViewById(containerViewId);
         setupLayout(parentView);
+        fragment = new KakaoMapFragment();
+        bundleFragment();
+    }
 
-        final KakaoMapFragment fragment = new KakaoMapFragment();
+    private void bundleFragment() {
+        if (fragment == null) {
+            return;
+        }
         FragmentActivity activity = (FragmentActivity) reactContext.getCurrentActivity();
-
         Bundle bundle = new Bundle();
         bundle.putDouble(Constants.PARAM_LAT, paramLat);
         bundle.putDouble(Constants.PARAM_LNG, paramLng);
@@ -111,14 +120,16 @@ public class KakaoMapManager extends ViewGroupManager<FrameLayout> {
         bundle.putString(Constants.PARAM_MARKER_IMAGE_URL, markerImageUrl);
         bundle.putParcelableArrayList(Constants.PARAM_MARKER_LIST, markerList);
 
+        fragment.reactContext = reactContext;
         fragment.setArguments(bundle);
         activity.getSupportFragmentManager()
                 .beginTransaction()
-                .replace(reactNativeViewId, fragment, String.valueOf(reactNativeViewId))
+                .replace(containerViewId, fragment, String.valueOf(containerViewId))
                 .commit();
+        fragment.onResume();
     }
 
-    public void setupLayout(View view) {
+    private void setupLayout(View view) {
         Choreographer.getInstance().postFrameCallback(new Choreographer.FrameCallback() {
             @Override
             public void doFrame(long frameTimeNanos) {
@@ -129,7 +140,7 @@ public class KakaoMapManager extends ViewGroupManager<FrameLayout> {
         });
     }
 
-    public void manuallyLayoutChildren(View view) {
+    private void manuallyLayoutChildren(View view) {
         view.measure(
                 View.MeasureSpec.makeMeasureSpec(view.getMeasuredWidth(), View.MeasureSpec.EXACTLY),
                 View.MeasureSpec.makeMeasureSpec(view.getMeasuredHeight(), View.MeasureSpec.EXACTLY));
