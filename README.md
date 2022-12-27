@@ -24,6 +24,9 @@ return (
         lat: 37.59523,
         lng: 127.08600,
     }}
+    onChange={(event) => {
+      // event.nativeEvent
+    }}
   />
 );
 ```

@@ -25,6 +25,9 @@ const App = () => {
           lat: 37.59523,
           lng: 127.08600,
         }}
+        onChange={(event) => {
+          console.log('[onChange]', event.nativeEvent);
+        }}
       />
     </SafeAreaView>
   );

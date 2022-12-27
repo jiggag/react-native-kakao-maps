@@ -21,11 +21,20 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.common.MapBuilder;
+import com.facebook.react.uimanager.events.RCTEventEmitter;
+
 public class KakaoMapFragment extends Fragment implements MapView.OpenAPIKeyAuthenticationResultListener, MapView.MapViewEventListener {
+    ReactContext reactContext;
+
     private MapView mMapView;
     private MapPOIItem mDefaultMarker;
     private Bitmap markerImage = null;
@@ -155,12 +164,33 @@ public class KakaoMapFragment extends Fragment implements MapView.OpenAPIKeyAuth
     @Override
     public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
         MapPoint.GeoCoordinate mapPointGeo = mapPoint.getMapPointGeoCoord();
+        WritableMap event = Arguments.createMap();
+        event.putDouble("lat", mapPointGeo.latitude);
+        event.putDouble("lng", mapPointGeo.longitude);
+        event.putDouble("zoomLevel", mapView.getZoomLevel());
+        onReceiveNativeEvent(event);
         Log.i(Constants.LOG_TAG, String.format("MapView onMapViewMoveFinished (%f,%f)", mapPointGeo.latitude, mapPointGeo.longitude));
     }
 
     @Override
     public void onMapViewZoomLevelChanged(MapView mapView, int zoomLevel) {
         Log.i(Constants.LOG_TAG, String.format("MapView onMapViewZoomLevelChanged (%d)", zoomLevel));
+    }
+
+    private void onReceiveNativeEvent(WritableMap event) {
+        reactContext
+                .getJSModule(RCTEventEmitter.class)
+                .receiveEvent(getId(), "topChange", event);
+    }
+
+    private Map getExportedCustomBubblingEventTypeConstants() {
+        return MapBuilder.builder().put(
+                "topChange",
+                MapBuilder.of(
+                        "phasedRegistrationNames",
+                        MapBuilder.of("bubbled", "onChange")
+                )
+        ).build();
     }
 
     private void getBitmapFromUrl(String imageUrl) {
@@ -209,7 +239,7 @@ public class KakaoMapFragment extends Fragment implements MapView.OpenAPIKeyAuth
             mDefaultMarker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
             mDefaultMarker.setCustomImageResourceId(markerResourceId);
         }
+
         mapView.addPOIItem(mDefaultMarker);
     }
-
 }

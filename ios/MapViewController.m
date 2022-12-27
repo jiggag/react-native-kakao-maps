@@ -84,4 +84,13 @@ NSArray *createMarker(NSArray *markerList, NSString *markerImageUrl, NSString *m
   return self;
 }
 
+- (void)mapView:(MTMapView*)mapView finishedMapMoveAnimation:(MTMapPoint*)mapCenterPoint
+{
+  _onChange(@{
+    @"zoomLevel": @(mapView.zoomLevel),
+    @"lat": @(mapCenterPoint.mapPointGeo.latitude),
+    @"lng": @(mapCenterPoint.mapPointGeo.longitude)
+  });
+}
+
 @end
