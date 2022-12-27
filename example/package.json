@@ -10,7 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@jiggag/react-native-kakao-maps": "^0.0.8",
+    "@jiggag/react-native-kakao-maps": "0.0.9",
     "react": "18.1.0",
     "react-native": "0.70.6"
   },
