@@ -47,6 +47,14 @@ public class KakaoMapFragment extends Fragment implements MapView.OpenAPIKeyAuth
     }
 
     private void createMapView() {
+        if (mMapView == null) {
+            mMapView = mapLayout.getMapView();
+            mMapView.setDaumMapApiKey(this.getString(R.string.kakao_app_key));
+            mMapView.setOpenAPIKeyAuthenticationResultListener(this);
+            mMapView.setMapViewEventListener(this);
+            mMapView.setMapType(MapView.MapType.Standard);
+        }
+
         mMapView.removeAllPOIItems();
 
         Double lat = getArguments().getDouble(Constants.PARAM_LAT);
@@ -70,12 +78,6 @@ public class KakaoMapFragment extends Fragment implements MapView.OpenAPIKeyAuth
 
         View rootView = inflater.inflate(R.layout.kakao_map_view, parent, false);
 
-        mMapView = mapLayout.getMapView();
-        mMapView.setDaumMapApiKey(this.getString(R.string.kakao_app_key));
-        mMapView.setOpenAPIKeyAuthenticationResultListener(this);
-        mMapView.setMapViewEventListener(this);
-        mMapView.setMapType(MapView.MapType.Standard);
-
         createMapView();
 
         ViewGroup mapViewContainer = rootView.findViewById(R.id.kakao_map_view);
@@ -85,29 +87,9 @@ public class KakaoMapFragment extends Fragment implements MapView.OpenAPIKeyAuth
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         createMapView();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
     }
 
     //	/////////////////////////////////////////////////////////////////////////////////////////////////
