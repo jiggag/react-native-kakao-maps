@@ -175,3 +175,13 @@ keytool -exportcert -alias androiddebugkey -keystore ./android/app/debug.keystor
 
 #### 해결방법
 발급 받은 앱 키 `strings.xml > kakao_app_key` 교체 및 `앱 설정 > 플랫폼` 키 해시 등록
+
+### 안드로이드 에뮬레이터에서 지도를 열면 앱이 크래시 발생해요
+```shell
+java.lang.UnsatisfiedLinkError
+at net.daum.mf.map.n.api.NativeMapLibraryLoader.loadLibrary(NativeMapLibraryLoader.java:39)
+...
+```
+#### 해결방법
+- 안드로이드 에뮬레이터(x86, x86_64)에서는 카카오 맵을 지원하지 않고 있습니다. ([관련 이슈 #31](https://github.com/jiggag/react-native-kakao-maps/issues/31#issuecomment-1435983575))
+- 실기기를 이용해주세요.
