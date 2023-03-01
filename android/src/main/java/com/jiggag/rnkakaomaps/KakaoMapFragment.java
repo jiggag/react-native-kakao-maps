@@ -38,6 +38,7 @@ public class KakaoMapFragment extends Fragment implements MapView.OpenAPIKeyAuth
     private MapView mMapView;
     private MapPOIItem mDefaultMarker;
     private Bitmap markerImage = null;
+    private MapPoint.GeoCoordinate mapCenterPoint;
     MapLayout mapLayout;
 
     @Override
@@ -49,9 +50,13 @@ public class KakaoMapFragment extends Fragment implements MapView.OpenAPIKeyAuth
     private void createMapView() {
         mMapView.removeAllPOIItems();
 
-        Double lat = getArguments().getDouble(Constants.PARAM_LAT);
-        Double lng = getArguments().getDouble(Constants.PARAM_LNG);
-        mMapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(lat, lng), true);
+        if (mapCenterPoint == null) {
+            Double lat = getArguments().getDouble(Constants.PARAM_LAT);
+            Double lng = getArguments().getDouble(Constants.PARAM_LNG);
+            mMapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(lat, lng), true);
+        } else {
+            mMapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(mapCenterPoint.latitude, mapCenterPoint.longitude), true);
+        }
 
         ArrayList<HashMap<String, Object>> markerList = (ArrayList<HashMap<String, Object>>) getArguments().get(Constants.PARAM_MARKER_LIST);
         String markerImageUrl = getArguments().getString(Constants.PARAM_MARKER_IMAGE_URL);
@@ -85,29 +90,9 @@ public class KakaoMapFragment extends Fragment implements MapView.OpenAPIKeyAuth
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         createMapView();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
     }
 
     //	/////////////////////////////////////////////////////////////////////////////////////////////////
@@ -164,6 +149,7 @@ public class KakaoMapFragment extends Fragment implements MapView.OpenAPIKeyAuth
     @Override
     public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
         MapPoint.GeoCoordinate mapPointGeo = mapPoint.getMapPointGeoCoord();
+        mapCenterPoint = mapPointGeo;
         WritableMap event = Arguments.createMap();
         event.putDouble("lat", mapPointGeo.latitude);
         event.putDouble("lng", mapPointGeo.longitude);
