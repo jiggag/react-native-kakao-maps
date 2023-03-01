@@ -48,6 +48,14 @@ public class KakaoMapFragment extends Fragment implements MapView.OpenAPIKeyAuth
     }
 
     private void createMapView() {
+        if (mMapView == null) {
+            mMapView = mapLayout.getMapView();
+            mMapView.setDaumMapApiKey(this.getString(R.string.kakao_app_key));
+            mMapView.setOpenAPIKeyAuthenticationResultListener(this);
+            mMapView.setMapViewEventListener(this);
+            mMapView.setMapType(MapView.MapType.Standard);
+        }
+
         mMapView.removeAllPOIItems();
 
         if (mapCenterPoint == null) {
@@ -74,12 +82,6 @@ public class KakaoMapFragment extends Fragment implements MapView.OpenAPIKeyAuth
         super.onCreateView(inflater, parent, savedInstanceState);
 
         View rootView = inflater.inflate(R.layout.kakao_map_view, parent, false);
-
-        mMapView = mapLayout.getMapView();
-        mMapView.setDaumMapApiKey(this.getString(R.string.kakao_app_key));
-        mMapView.setOpenAPIKeyAuthenticationResultListener(this);
-        mMapView.setMapViewEventListener(this);
-        mMapView.setMapType(MapView.MapType.Standard);
 
         createMapView();
 
