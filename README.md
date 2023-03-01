@@ -38,6 +38,7 @@ return (
 ### 카카오 앱 키 설정
 #### 안드로이드
 - `./android/app/src/main/res/values/strings.xml`
+- 
   ```sh
   <resources>
       ...
@@ -46,6 +47,7 @@ return (
   ```
 #### iOS
 - `./Info.plist`
+- 
   ```xml
   <key>KAKAO_APP_KEY</key>
   <string>KAKAO_APP_KEY</string>

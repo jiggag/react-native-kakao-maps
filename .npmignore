@@ -1,1 +1,8 @@
 example/
+.env
+.gitattributes
+.project
+.idea
+.gradle
+.settings
+local.properties
