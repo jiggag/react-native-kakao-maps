@@ -1,6 +1,6 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {SafeAreaView} from 'react-native';
-import {KakaoMapView} from '@jiggag/react-native-kakao-maps';
+import React, { useEffect, useState, useCallback } from 'react';
+import { SafeAreaView } from 'react-native';
+import { KakaoMapView } from '@jiggag/react-native-kakao-maps';
 
 const Constants = {
   CENTER_POINT: {
