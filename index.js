@@ -1,36 +1,25 @@
 import React, { useEffect, useRef } from 'react';
-import { Platform, UIManager, findNodeHandle, requireNativeComponent, View } from 'react-native';
+import { Platform, UIManager, findNodeHandle, requireNativeComponent } from 'react-native';
 
 const NativeComponent = requireNativeComponent('KakaoMapView');
 
-const register = (ref) => {
-  if (Platform.OS === 'ios') {
-    return;
-  }
-
-  const viewId = findNodeHandle(ref.current);
-  return UIManager.dispatchViewManagerCommand(
+const createFragment = viewId =>
+  UIManager.dispatchViewManagerCommand(
     viewId,
     UIManager.KakaoMapView.Commands.create.toString(),
-    [viewId]
+    [viewId],
   );
-};
 
-export const KakaoMapView = (props) => {
+export const KakaoMapView = props => {
   const ref = useRef(null);
 
   useEffect(() => {
-    register(ref);
+    const viewId = findNodeHandle(ref.current);
+
+    if (Platform.OS === 'android') {
+      createFragment(viewId);
+    }
   }, []);
 
-  return (
-    <View style={{
-      borderColor: 'transparent'
-    }}>
-      <NativeComponent
-        {...props}
-        ref={ref}
-      />
-    </View>
-  );
+  return <NativeComponent {...props} ref={ref} />;
 };
