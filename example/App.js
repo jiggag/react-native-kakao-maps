@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { SafeAreaView } from 'react-native';
 import { KakaoMapView } from '@jiggag/react-native-kakao-maps';
 
@@ -22,24 +22,6 @@ const Constants = {
 };
 
 const App = () => {
-  const [markerList, setMarkerList] = useState([]);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setMarkerList(prevState => {
-        if (prevState.length === 2) {
-          return [];
-        }
-
-        return [...prevState, Constants.MARKER_LIST[prevState.length % 2]];
-      });
-    }, 2000);
-
-    return () => {
-      clearInterval(id);
-    };
-  }, []);
-
   const onChange = useCallback(event => {
     console.log('[onChange]', event.nativeEvent);
   }, []);
@@ -48,7 +30,7 @@ const App = () => {
     <SafeAreaView>
       <KakaoMapView
         markerImageUrl="https://github.com/jiggag/react-native-kakao-maps/blob/develop/example/custom_image.png?raw=true"
-        markerList={markerList}
+        markerList={Constants.MARKER_LIST}
         width={300}
         height={500}
         centerPoint={Constants.CENTER_POINT}
