@@ -368,7 +368,7 @@ PODS:
     - React-jsi (= 0.70.6)
     - React-logger (= 0.70.6)
     - React-perflogger (= 0.70.6)
-  - ReactNativeKakaoMaps (0.0.10):
+  - ReactNativeKakaoMaps (0.0.11):
     - React
   - SocketRocket (0.6.0)
   - Yoga (1.14.0)
@@ -574,11 +574,11 @@ SPEC CHECKSUMS:
   React-RCTVibration: c75ceef7aa60a33b2d5731ebe5800ddde40cefc4
   React-runtimeexecutor: 15437b576139df27635400de0599d9844f1ab817
   ReactCommon: 349be31adeecffc7986a0de875d7fb0dcf4e251c
-  ReactNativeKakaoMaps: e82e667223510e9585d7268862ba48e2e8749a25
+  ReactNativeKakaoMaps: e28562cbd29fa9778e46473011d8f43d24cbbc05
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   Yoga: 99caf8d5ab45e9d637ee6e0174ec16fbbb01bcfc
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
 PODFILE CHECKSUM: e9774a3132cc2072013fd07ec1ade8155544b823
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1
