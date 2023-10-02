@@ -64,11 +64,8 @@ public class KakaoMapManager extends ViewGroupManager<FrameLayout> {
         super.receiveCommand(root, commandId, args);
         containerViewId = args.getInt(0);
         int commandIdInt = Integer.parseInt(commandId);
-
         if (commandIdInt == COMMAND_CREATE) {
-            if (fragment == null) {
-                createFragment(root);
-            }
+            createFragment(root);
         }
     }
 
@@ -124,8 +121,9 @@ public class KakaoMapManager extends ViewGroupManager<FrameLayout> {
         fragment.setArguments(bundle);
         activity.getSupportFragmentManager()
                 .beginTransaction()
+                .addToBackStack(null)
                 .replace(containerViewId, fragment, String.valueOf(containerViewId))
-                .commit();
+                .commitAllowingStateLoss();
         fragment.onResume();
     }
 

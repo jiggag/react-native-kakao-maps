@@ -1,4 +1,6 @@
 ## @jiggag/react-native-kakao-maps
+<img src="example.png" width="420" />
+
 ```tsx
 import { KakakoMapView } from '@jiggag/react-native-kakao-maps';
 

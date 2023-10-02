@@ -161,6 +161,17 @@ Undefined symbol: _sqlite3_step
 #### 해결방법
 `Build Phases > Link Binary With Libraries > libsqlite3.tbd 추가`
 
+------
+### iOS 빌드가 되지 않아요
+```shell
+❌  ld: in /Users/jiggag/react-native-kakao-maps/example/node_modules/@jiggag/react-native-kakao-maps/ios/DaumMap.embeddedframework/DaumMap.framework/DaumMap(HashUtils.o), building for iOS Simulator, but linking in object file built for iOS, file '/Users/jiggag/react-native-kakao-maps/example/node_modules/@jiggag/react-native-kakao-maps/ios/DaumMap.embeddedframework/DaumMap.framework/DaumMap' for architecture arm64
+❌  clang: error: linker command failed with exit code 1 (use -v to see invocation)
+```
+
+#### 해결방법
+`xcode > example.xcworkspace` 열어서 빌드
+
+------
 ### 지도가 보이지 않아요
 [카카오 지도 개발자 문서](https://apis.map.kakao.com/android/guide/#step2)를 참고하여 앱 키 발급 및 키 해시를 등록해주세요
 
@@ -176,6 +187,7 @@ keytool -exportcert -alias androiddebugkey -keystore ./android/app/debug.keystor
 #### 해결방법
 발급 받은 앱 키 `strings.xml > kakao_app_key` 교체 및 `앱 설정 > 플랫폼` 키 해시 등록
 
+------
 ### 안드로이드 에뮬레이터에서 지도를 열면 앱이 크래시 발생해요
 ```shell
 java.lang.UnsatisfiedLinkError

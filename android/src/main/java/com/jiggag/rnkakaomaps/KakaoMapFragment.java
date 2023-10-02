@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import android.view.MenuItem;
-
 import net.daum.mf.map.api.MapLayout;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapPOIItem;
@@ -23,7 +21,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.facebook.react.bridge.Arguments;
@@ -34,18 +31,12 @@ import com.facebook.react.uimanager.events.RCTEventEmitter;
 
 public class KakaoMapFragment extends Fragment implements MapView.OpenAPIKeyAuthenticationResultListener, MapView.MapViewEventListener {
     ReactContext reactContext;
-
+    ViewGroup mapViewContainer;
     private MapView mMapView;
     private MapPOIItem mDefaultMarker;
     private Bitmap markerImage = null;
     private MapPoint.GeoCoordinate mapCenterPoint;
     MapLayout mapLayout;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mapLayout = new MapLayout(getActivity());
-    }
 
     private void createMapView() {
         if (mMapView == null) {
@@ -81,11 +72,12 @@ public class KakaoMapFragment extends Fragment implements MapView.OpenAPIKeyAuth
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         super.onCreateView(inflater, parent, savedInstanceState);
 
+        mapLayout = new MapLayout(getActivity());
         View rootView = inflater.inflate(R.layout.kakao_map_view, parent, false);
 
         createMapView();
 
-        ViewGroup mapViewContainer = rootView.findViewById(R.id.kakao_map_view);
+        mapViewContainer = rootView.findViewById(R.id.kakao_map_view);
         mapViewContainer.addView(mapLayout);
 
         return rootView;
@@ -200,6 +192,7 @@ public class KakaoMapFragment extends Fragment implements MapView.OpenAPIKeyAuth
     }
 
     private void createMarker(ArrayList<HashMap<String, Object>> markerList, Bitmap markerImage, int markerResourceId) {
+        mMapView.removeAllPOIItems();
         if ((markerList != null ? markerList.size() : 0) > 0) {
             for (int i = 0; i < markerList.size(); i++) {
                 String markerName = (String) markerList.get(i).get(Constants.PARAM_MARKER_NAME);
