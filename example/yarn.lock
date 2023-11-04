@@ -1021,10 +1021,10 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
-"@jiggag/react-native-kakao-maps@0.0.11":
-  version "0.0.11"
-  resolved "https://registry.yarnpkg.com/@jiggag/react-native-kakao-maps/-/react-native-kakao-maps-0.0.11.tgz#42ffb8cc8b785c6a5a4264b1b2da9bf3994f6763"
-  integrity sha512-/9pXIaWR16N0W3BBOOrufKAqJMnhI4jWhBMWz9K59EXTqaQjxSl8NnxrqLI5pBuYF/OS9G+043ldn8MWJZDl3A==
+"@jiggag/react-native-kakao-maps@0.0.12":
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/@jiggag/react-native-kakao-maps/-/react-native-kakao-maps-0.0.12.tgz#bc41a466aff9c670d56a3b2d882ab34c48b82c75"
+  integrity sha512-iyY0T54OkNCzJp4CrH4xPB66tL/PKbeRzhCcL33FxiP+EtKhSixBubJFCqzzkd7hllKm3stoZnBXXtHaWlwz3w==
 
 "@jridgewell/gen-mapping@^0.1.0":
   version "0.1.1"
