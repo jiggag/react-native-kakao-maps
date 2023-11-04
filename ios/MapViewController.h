@@ -9,6 +9,6 @@
 @property(nonatomic, assign) double lng;
 @property(nonatomic, assign, nonnull) NSString *markerImageUrl;
 @property(nonatomic, assign, nonnull) NSString *markerImageName;
-@property (nonatomic, copy) RCTBubblingEventBlock onChange;
+@property (nonatomic, copy, nonnull) RCTBubblingEventBlock onChange;
 
 @end

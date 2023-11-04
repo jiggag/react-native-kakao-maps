@@ -2,6 +2,9 @@
 
 @interface MapViewController () {
   MTMapView *_mapView;
+  NSArray *__markerList;
+  NSString *__markerImageUrl;
+  NSString *__markerImageName;
 }
 
 @end
@@ -33,17 +36,17 @@ NSArray *createMarker(NSArray *markerList, NSString *markerImageUrl, NSString *m
 }
 
 - (void)setMarkerImageName:(NSString *)markerImageName {
-  _markerImageName = markerImageName;
+  __markerImageName = markerImageName;
   [self load];
 }
 
 - (void)setMarkerImageUrl:(NSString *)markerImageUrl {
-  _markerImageUrl = markerImageUrl;
+  __markerImageUrl = markerImageUrl;
   [self load];
 }
 
 - (void)setMarkerList:(NSArray *)markerList {
-  _markerList = markerList;
+  __markerList = markerList;
   [self load];
 }
 
@@ -64,8 +67,8 @@ NSArray *createMarker(NSArray *markerList, NSString *markerImageUrl, NSString *m
   }
 
   [_mapView removeAllPOIItems];
-  [_mapView addPOIItems: createMarker(_markerList, _markerImageUrl, _markerImageName)];
-  [_mapView setMapCenterPoint:[MTMapPoint mapPointWithGeoCoord:MTMapPointGeoMake(_lat, _lng)] animated:YES];
+  [_mapView addPOIItems: createMarker(__markerList, __markerImageUrl, __markerImageName)];
+  [_mapView setMapCenterPoint: [MTMapPoint mapPointWithGeoCoord:MTMapPointGeoMake(_lat, _lng)] animated:YES];
 
   [self addSubview: _mapView];
 }
